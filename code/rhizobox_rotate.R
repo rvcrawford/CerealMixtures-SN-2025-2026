@@ -74,7 +74,6 @@ crop_and_rotate <- function(x, directory = NULL, display_scale = 0.25){
   bottom_angle <- atan2(pts$y[3] - pts$y[4], pts$x[3] - pts$x[4])
   left_side_angle <- atan2(pts$y[4] - pts$y[1], pts$x[4] - pts$x[1]) - pi/2
   right_side_angle <- atan2(pts$y[3] - pts$y[2], pts$x[3] - pts$x[2]) - pi/2
-
   
   # Average angles with weird math
   angles <- c(top_angle, bottom_angle, left_side_angle, right_side_angle)
@@ -115,7 +114,6 @@ crop_and_rotate <- function(x, directory = NULL, display_scale = 0.25){
   # CR = cropped, rotated
   img_name <- paste(path_to_use, no_suffix, "_CR_", create_date_time, ".tif", sep = "")
   cat("Attempting to save to:", img_name, "\n")
-
   print(path_to_use)
   print(no_suffix)
   print(create_date_time)
@@ -126,6 +124,4 @@ crop_and_rotate <- function(x, directory = NULL, display_scale = 0.25){
   writeImage(img_cropped, img_name)
   rm(img_cropped)
   gc()
-
 }
-
