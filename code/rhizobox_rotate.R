@@ -31,6 +31,7 @@ crop_and_rotate <- function(x, directory = NULL, display_scale = 0.25){
   cy_original <- dims_orig[[2]]/2
   
   rgb_im <- EBImage::rgbImage(img[,,1], img[,,2], img[,,3])
+  
   img_display <- resize(rgb_im, w = dims_orig[1] * display_scale,
                         h = dims_orig[2] * display_scale)
   dims_display <- dim(img_display)
@@ -121,7 +122,15 @@ crop_and_rotate <- function(x, directory = NULL, display_scale = 0.25){
   
   # set color mode so images are written in correct stack order
   colorMode(img_cropped) <- 2
-  writeImage(img_cropped, img_name)
+  # writeImage(img_cropped, img_name, bits.per.sample = 8)
+  img_array <- imageData(img_cropped)
+  # dims_array <- dim(img_array)
+  # img_array <- img_array * 255          # Scale 0-1 → 0-255
+  # img_array <- array(as.raw(img_array), dim = dims_array)  # double → integer
+  # 
+  # Write with LZW compression
+  
+  writeTIFF(img_array, img_name, bits.per.sample = 8, compression = "LZW", reduce = TRUE)
   rm(img_cropped)
   gc()
 }
